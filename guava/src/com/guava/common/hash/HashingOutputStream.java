@@ -12,11 +12,11 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.guava.common.annotations.Beta;
+import com.google.common.annotations.Beta;
 
 import java.io.FilterOutputStream;
 import java.io.IOException;
@@ -63,5 +63,12 @@ public final class HashingOutputStream extends FilterOutputStream {
    */
   public HashCode hash() {
     return hasher.hash();
+  }
+
+  // Overriding close() because FilterOutputStream's close() method pre-JDK8 has bad behavior:
+  // it silently ignores any exception thrown by flush(). Instead, just close the delegate stream.
+  // It should flush itself if necessary.
+  @Override public void close() throws IOException {
+    out.close();
   }
 }

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkElementIndex;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkPositionIndexes;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkElementIndex;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkPositionIndexes;
 
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtCompatible;
 
 import java.io.Serializable;
 import java.util.AbstractList;
@@ -30,6 +30,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.RandomAccess;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 
 /**
  * Static utility methods pertaining to {@code byte} primitives, that are not
@@ -47,6 +50,7 @@ import java.util.RandomAccess;
  */
 // TODO(kevinb): how to prevent warning on UnsignedBytes when building GWT
 // javadoc?
+@CheckReturnValue
 @GwtCompatible
 public final class Bytes {
   private Bytes() {}
@@ -339,7 +343,7 @@ public final class Bytes {
       return new ByteArrayAsList(array, start + fromIndex, start + toIndex);
     }
 
-    @Override public boolean equals(Object object) {
+    @Override public boolean equals(@Nullable Object object) {
       if (object == this) {
         return true;
       }

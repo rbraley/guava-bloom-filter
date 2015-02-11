@@ -14,25 +14,27 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkElementIndex;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkPositionIndexes;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkElementIndex;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkPositionIndexes;
 
-import com.guava.common.annotations.Beta;
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.Beta;
+import com.google.common.annotations.GwtCompatible;
 
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
+
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 
 /**
  * Static utility methods pertaining to {@code boolean} primitives, that are not
@@ -45,6 +47,7 @@ import java.util.RandomAccess;
  * @author Kevin Bourrillion
  * @since 1.0
  */
+@CheckReturnValue
 @GwtCompatible
 public final class Booleans {
   private Booleans() {}
@@ -65,15 +68,14 @@ public final class Booleans {
    * ({@code false} is considered less than {@code true}). The sign of the
    * value returned is the same as that of {@code ((Boolean) a).compareTo(b)}.
    *
-   * <p><b>Note:</b> projects using JDK 7 or later should use the equivalent
-   * {@link Boolean#compare} method instead.
+   * <p><b>Note for Java 7 and later:</b> this method should be treated as
+   * deprecated; use the equivalent {@link Boolean#compare} method instead.
    *
    * @param a the first {@code boolean} to compare
    * @param b the second {@code boolean} to compare
    * @return a positive number if only {@code a} is {@code true}, a negative
    *     number if only {@code b} is true, or zero if {@code a == b}
    */
-  // TODO(kevinb): if JDK 6 ever becomes a non-concern, remove this
   public static int compare(boolean a, boolean b) {
     return (a == b) ? 0 : (a ? 1 : -1);
   }
@@ -83,7 +85,7 @@ public final class Booleans {
    * {@code array}.
    *
    * <p><b>Note:</b> consider representing the array as a {@link
-   * BitSet} instead, replacing {@code Booleans.contains(array, true)}
+   * java.util.BitSet} instead, replacing {@code Booleans.contains(array, true)}
    * with {@code !bitSet.isEmpty()} and {@code Booleans.contains(array, false)}
    * with {@code bitSet.nextClearBit(0) == sizeOfBitSet}.
    *
@@ -105,9 +107,10 @@ public final class Booleans {
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
-   * <p><b>Note:</b> consider representing the array as a {@link BitSet}
-   * instead, and using {@link BitSet#nextSetBit(int)} or {@link
-   * BitSet#nextClearBit(int)}.
+   * <p><b>Note:</b> consider representing the array as a {@link
+   * java.util.BitSet} instead, and using {@link
+   * java.util.BitSet#nextSetBit(int)} or {@link
+   * java.util.BitSet#nextClearBit(int)}.
    *
    * @param array an array of {@code boolean} values, possibly empty
    * @param target a primitive {@code boolean} value
@@ -307,7 +310,7 @@ public final class Booleans {
    * that method.
    *
    * <p><b>Note:</b> consider representing the collection as a {@link
-   * BitSet} instead.
+   * java.util.BitSet} instead.
    *
    * @param collection a collection of {@code Boolean} objects
    * @return an array containing the same values as {@code collection}, in the
@@ -426,7 +429,7 @@ public final class Booleans {
       return new BooleanArrayAsList(array, start + fromIndex, start + toIndex);
     }
 
-    @Override public boolean equals(Object object) {
+    @Override public boolean equals(@Nullable Object object) {
       if (object == this) {
         return true;
       }

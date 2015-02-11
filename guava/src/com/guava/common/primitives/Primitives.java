@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import javax.annotation.CheckReturnValue;
 
 /**
  * Contains static utility methods pertaining to primitive types and their
@@ -30,6 +32,7 @@ import java.util.Set;
  * @author Kevin Bourrillion
  * @since 1.0
  */
+@CheckReturnValue
 public final class Primitives {
   private Primitives() {}
 

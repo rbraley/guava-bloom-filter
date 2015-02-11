@@ -12,9 +12,9 @@
  * under the License.
  */
 
-package com.guava.common.math;
+package com.google.common.math;
 
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtCompatible;
 
 import java.math.BigInteger;
 

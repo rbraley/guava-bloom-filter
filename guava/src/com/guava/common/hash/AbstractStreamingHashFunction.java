@@ -12,11 +12,11 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkArgument;
 
-import com.guava.common.base.Preconditions;
+import com.google.common.base.Preconditions;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

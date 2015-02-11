@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtCompatible;
 
 import java.util.Comparator;
+
+import javax.annotation.CheckReturnValue;
 
 /**
  * Static utility methods pertaining to {@code byte} primitives that
@@ -38,6 +40,7 @@ import java.util.Comparator;
  */
 // TODO(kevinb): how to prevent warning on UnsignedBytes when building GWT
 // javadoc?
+@CheckReturnValue
 @GwtCompatible
 public final class SignedBytes {
   private SignedBytes() {}

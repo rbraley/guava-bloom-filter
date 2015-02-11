@@ -30,40 +30,40 @@
  * <h3>General static utilities</h3>
  *
  * <ul>
- * <li>{@link com.guava.common.primitives.Primitives}
+ * <li>{@link com.google.common.primitives.Primitives}
  * </ul>
  *
  * <h3>Per-type static utilities</h3>
  *
  * <ul>
- * <li>{@link com.guava.common.primitives.Booleans}
- * <li>{@link com.guava.common.primitives.Bytes}
+ * <li>{@link com.google.common.primitives.Booleans}
+ * <li>{@link com.google.common.primitives.Bytes}
  *   <ul>
- *     <li>{@link com.guava.common.primitives.SignedBytes}
- *     <li>{@link com.guava.common.primitives.UnsignedBytes}
+ *     <li>{@link com.google.common.primitives.SignedBytes}
+ *     <li>{@link com.google.common.primitives.UnsignedBytes}
  *   </ul>
- * <li>{@link com.guava.common.primitives.Chars}
- * <li>{@link com.guava.common.primitives.Doubles}
- * <li>{@link com.guava.common.primitives.Floats}
- * <li>{@link com.guava.common.primitives.Ints}
+ * <li>{@link com.google.common.primitives.Chars}
+ * <li>{@link com.google.common.primitives.Doubles}
+ * <li>{@link com.google.common.primitives.Floats}
+ * <li>{@link com.google.common.primitives.Ints}
  *   <ul>
- *     <li>{@link com.guava.common.primitives.UnsignedInts}
+ *     <li>{@link com.google.common.primitives.UnsignedInts}
  *   </ul>
- * <li>{@link com.guava.common.primitives.Longs}
+ * <li>{@link com.google.common.primitives.Longs}
  *   <ul>
- *     <li>{@link com.guava.common.primitives.UnsignedLongs}
+ *     <li>{@link com.google.common.primitives.UnsignedLongs}
  *   </ul>
- * <li>{@link com.guava.common.primitives.Shorts}
+ * <li>{@link com.google.common.primitives.Shorts}
  * </ul>
  *
  * <h3>Value types</h3>
  * <ul>
- *   <li>{@link com.guava.common.primitives.UnsignedInteger}
- *   <li>{@link com.guava.common.primitives.UnsignedLong}
+ *   <li>{@link com.google.common.primitives.UnsignedInteger}
+ *   <li>{@link com.google.common.primitives.UnsignedLong}
  * </ul>
  */
 @ParametersAreNonnullByDefault
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkPositionIndexes;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkPositionIndexes;
 
-import com.guava.common.primitives.Chars;
-import com.guava.common.primitives.Ints;
-import com.guava.common.primitives.Longs;
-import com.guava.common.primitives.Shorts;
+import com.google.common.primitives.Chars;
+import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
+import com.google.common.primitives.Shorts;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

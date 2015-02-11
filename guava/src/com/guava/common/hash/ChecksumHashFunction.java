@@ -12,12 +12,12 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.guava.common.base.Supplier;
+import com.google.common.base.Supplier;
 
 import java.io.Serializable;
 import java.util.zip.Checksum;

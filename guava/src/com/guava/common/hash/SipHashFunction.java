@@ -17,9 +17,9 @@
  * "SipHash: a fast short-input PRF" (available at https://131002.net/siphash/siphash.pdf).
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -68,7 +68,7 @@ final class SipHashFunction extends AbstractStreamingHashFunction implements Ser
     return new SipHasher(c, d, k0, k1);
   }
 
-  // TODO(user): Implement and benchmark the hashFoo() shortcuts.
+  // TODO(kak): Implement and benchmark the hashFoo() shortcuts.
 
   @Override public String toString() {
     return "Hashing.sipHash" + c + "" + d + "(" + k0 + ", " + k1 + ")";

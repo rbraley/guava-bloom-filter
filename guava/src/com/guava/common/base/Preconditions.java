@@ -12,9 +12,9 @@
  * the License.
  */
 
-package com.guava.common.base;
+package com.google.common.base;
 
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
@@ -74,7 +74,7 @@ import javax.annotation.Nullable;
  *
  * <h3>{@code java.util.Objects.requireNonNull()}</h3>
  *
- * <p>Projects which use {@code com.guava.common} should generally avoid the use of {@link
+ * <p>Projects which use {@code com.google.common} should generally avoid the use of {@link
  * java.util.Objects#requireNonNull(Object)}. Instead, use whichever of {@link
  * #checkNotNull(Object)} or {@link Verify#verifyNotNull(Object)} is appropriate to the situation.
  * (The same goes for the message-accepting overloads.)
@@ -82,10 +82,7 @@ import javax.annotation.Nullable;
  * <h3>Only {@code %s} is supported</h3>
  *
  * <p>In {@code Preconditions} error message template strings, only the {@code "%s"} specifier is
- * supported, not the full range of {@link java.util.Formatter} specifiers. However, note that if
- * the number of arguments does not match the number of occurrences of {@code "%s"} in the format
- * string, {@code Preconditions} will still behave as expected, and will still include all argument
- * values in the error message; the message will simply not be formatted exactly as intended.
+ * supported, not the full range of {@link java.util.Formatter} specifiers.
  *
  * <h3>More information</h3>
  *

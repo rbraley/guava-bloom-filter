@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.guava.common.base;
+package com.google.common.base;
 
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.guava.common.annotations.Beta;
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.Beta;
+import com.google.common.annotations.GwtCompatible;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
  * <p>The reverse operation <b>may</b> be a strict <i>inverse</i> (meaning that {@code
  * converter.reverse().convert(converter.convert(a)).equals(a)} is always true). However, it is
  * very common (perhaps <i>more</i> common) for round-trip conversion to be <i>lossy</i>. Consider
- * an example round-trip using {@link com.guava.common.primitives.Doubles#stringConverter}:
+ * an example round-trip using {@link com.google.common.primitives.Doubles#stringConverter}:
  *
  * <ol>
  * <li>{@code stringConverter().convert("1.00")} returns the {@code Double} value {@code 1.0}
@@ -63,10 +63,10 @@ import javax.annotation.Nullable;
  *
  * <ul>
  * <li>Use a provided converter implementation, such as {@link Enums#stringConverter}, {@link
- *     com.guava.common.primitives.Ints#stringConverter Ints.stringConverter} or the {@linkplain
+ *     com.google.common.primitives.Ints#stringConverter Ints.stringConverter} or the {@linkplain
  *     #reverse reverse} views of these.
  * <li>Convert between specific preset values using {@link
- *     com.guava.common.collect.Maps#asConverter Maps.asConverter}. For example, use this to create
+ *     com.google.common.collect.Maps#asConverter Maps.asConverter}. For example, use this to create
  *     a "fake" converter for a unit test. It is unnecessary (and confusing) to <i>mock</i> the
  *     {@code Converter} type using a mocking framework.
  * <li>Otherwise, extend this class and implement its {@link #doForward} and {@link #doBackward}
@@ -207,7 +207,7 @@ public abstract class Converter<A, B> implements Function<A, B> {
    *
    * <p>The returned converter is serializable if {@code this} converter is.
    */
-  // TODO(user): Make this method final
+  // TODO(kak): Make this method final
   public Converter<B, A> reverse() {
     Converter<B, A> result = reverse;
     return (result == null) ? reverse = new ReverseConverter<A, B>(this) : result;
@@ -284,7 +284,14 @@ public abstract class Converter<A, B> implements Function<A, B> {
    * <p>The returned converter is serializable if {@code this} converter and {@code secondConverter}
    * are.
    */
-  public <C> Converter<A, C> andThen(Converter<B, C> secondConverter) {
+  public final <C> Converter<A, C> andThen(Converter<B, C> secondConverter) {
+    return doAndThen(secondConverter);
+  }
+
+  /**
+   * Package-private non-final implementation of andThen() so only we can override it.
+   */
+  <C> Converter<A, C> doAndThen(Converter<B, C> secondConverter) {
     return new ConverterComposition<A, B, C>(this, checkNotNull(secondConverter));
   }
 
@@ -379,6 +386,69 @@ public abstract class Converter<A, B> implements Function<A, B> {
   // Static converters
 
   /**
+   * Returns a converter based on <i>existing</i> forward and backward functions. Note that it is
+   * unnecessary to create <i>new</i> classes implementing {@code Function} just to pass them in
+   * here. Instead, simply subclass {@code Converter} and implement its {@link #doForward} and
+   * {@link #doBackward} methods directly.
+   *
+   * <p>These functions will never be passed {@code null} and must not under any circumstances
+   * return {@code null}. If a value cannot be converted, the function should throw an unchecked
+   * exception (typically, but not necessarily, {@link IllegalArgumentException}).
+   *
+   * <p>The returned converter is serializable if both provided functions are.
+   *
+   * @since 17.0
+   */
+  public static <A, B> Converter<A, B> from(
+      Function<? super A, ? extends B> forwardFunction,
+      Function<? super B, ? extends A> backwardFunction) {
+    return new FunctionBasedConverter<A, B>(forwardFunction, backwardFunction);
+  }
+
+  private static final class FunctionBasedConverter<A, B>
+      extends Converter<A, B> implements Serializable {
+    private final Function<? super A, ? extends B> forwardFunction;
+    private final Function<? super B, ? extends A> backwardFunction;
+
+    private FunctionBasedConverter(
+        Function<? super A, ? extends B> forwardFunction,
+        Function<? super B, ? extends A> backwardFunction) {
+      this.forwardFunction = checkNotNull(forwardFunction);
+      this.backwardFunction = checkNotNull(backwardFunction);
+    }
+
+    @Override
+    protected B doForward(A a) {
+      return forwardFunction.apply(a);
+    }
+
+    @Override
+    protected A doBackward(B b) {
+      return backwardFunction.apply(b);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object object) {
+      if (object instanceof FunctionBasedConverter) {
+        FunctionBasedConverter<?, ?> that = (FunctionBasedConverter<?, ?>) object;
+        return this.forwardFunction.equals(that.forwardFunction)
+            && this.backwardFunction.equals(that.backwardFunction);
+      }
+      return false;
+    }
+
+    @Override
+    public int hashCode() {
+      return forwardFunction.hashCode() * 31 + backwardFunction.hashCode();
+    }
+
+    @Override
+    public String toString() {
+      return "Converter.from(" + forwardFunction + ", " + backwardFunction + ")";
+    }
+  }
+
+  /**
    * Returns a serializable converter that always converts or reverses an object to itself.
    */
   @SuppressWarnings("unchecked") // implementation is "fully variant"
@@ -409,7 +479,7 @@ public abstract class Converter<A, B> implements Function<A, B> {
     }
 
     @Override
-    public <S> Converter<T, S> andThen(Converter<T, S> otherConverter) {
+    <S> Converter<T, S> doAndThen(Converter<T, S> otherConverter) {
       return checkNotNull(otherConverter, "otherConverter");
     }
 

@@ -12,12 +12,12 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtCompatible;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -102,7 +102,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
    * an unsigned {@code long} value.
    *
    * @throws NumberFormatException if the string does not contain a parsable unsigned {@code long}
-   *         value
+   *     value
    */
   public static UnsignedLong valueOf(String string) {
     return valueOf(string, 10);
@@ -113,8 +113,8 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
    * an unsigned {@code long} value in the specified radix.
    *
    * @throws NumberFormatException if the string does not contain a parsable unsigned {@code long}
-   *         value, or {@code radix} is not between {@link Character#MIN_RADIX} and
-   *         {@link Character#MAX_RADIX}
+   *     value, or {@code radix} is not between {@link Character#MIN_RADIX} and
+   *     {@link Character#MAX_RADIX}
    */
   public static UnsignedLong valueOf(String string, int radix) {
     return fromLongBits(UnsignedLongs.parseUnsignedLong(string, radix));
@@ -126,6 +126,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
    *
    * @since 14.0
    */
+  @CheckReturnValue
   public UnsignedLong plus(UnsignedLong val) {
     return fromLongBits(this.value + checkNotNull(val).value);
   }
@@ -136,6 +137,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
    *
    * @since 14.0
    */
+  @CheckReturnValue
   public UnsignedLong minus(UnsignedLong val) {
     return fromLongBits(this.value - checkNotNull(val).value);
   }

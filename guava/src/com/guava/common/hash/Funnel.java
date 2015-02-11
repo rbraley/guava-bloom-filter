@@ -12,9 +12,9 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import com.guava.common.annotations.Beta;
+import com.google.common.annotations.Beta;
 
 import java.io.Serializable;
 
@@ -30,8 +30,8 @@ import java.io.Serializable;
  *   public enum PersonFunnel implements Funnel<Person> {
  *     INSTANCE;
  *     public void funnel(Person person, PrimitiveSink into) {
- *       into.putString(person.getFirstName())
- *           .putString(person.getLastName())
+ *       into.putUnencodedChars(person.getFirstName())
+ *           .putUnencodedChars(person.getLastName())
  *           .putInt(person.getAge());
  *     }
  *   }}</pre>

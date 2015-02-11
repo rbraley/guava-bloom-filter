@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import com.guava.common.base.Preconditions;
+import com.google.common.base.Preconditions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

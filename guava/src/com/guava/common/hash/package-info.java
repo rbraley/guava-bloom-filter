@@ -21,6 +21,6 @@
  * hashing</a>.
  */
 @ParametersAreNonnullByDefault
-package com.guava.common.hash;
+package com.google.common.hash;
 
 import javax.annotation.ParametersAreNonnullByDefault;

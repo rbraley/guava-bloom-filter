@@ -12,16 +12,16 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.primitives.UnsignedInts.INT_MASK;
-import static com.guava.common.primitives.UnsignedInts.compare;
-import static com.guava.common.primitives.UnsignedInts.toLong;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.primitives.UnsignedInts.INT_MASK;
+import static com.google.common.primitives.UnsignedInts.compare;
+import static com.google.common.primitives.UnsignedInts.toLong;
 
-import com.guava.common.annotations.GwtCompatible;
-import com.guava.common.annotations.GwtIncompatible;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtIncompatible;
 
 import java.math.BigInteger;
 
@@ -41,6 +41,7 @@ import javax.annotation.Nullable;
  * @author Louis Wasserman
  * @since 11.0
  */
+@CheckReturnValue
 @GwtCompatible(emulated = true)
 public final class UnsignedInteger extends Number implements Comparable<UnsignedInteger> {
   public static final UnsignedInteger ZERO = fromIntBits(0);
@@ -121,7 +122,6 @@ public final class UnsignedInteger extends Number implements Comparable<Unsigned
    *
    * @since 14.0
    */
-  @CheckReturnValue
   public UnsignedInteger plus(UnsignedInteger val) {
     return fromIntBits(this.value + checkNotNull(val).value);
   }
@@ -132,7 +132,6 @@ public final class UnsignedInteger extends Number implements Comparable<Unsigned
    *
    * @since 14.0
    */
-  @CheckReturnValue
   public UnsignedInteger minus(UnsignedInteger val) {
     return fromIntBits(value - checkNotNull(val).value);
   }
@@ -143,7 +142,6 @@ public final class UnsignedInteger extends Number implements Comparable<Unsigned
    *
    * @since 14.0
    */
-  @CheckReturnValue
   @GwtIncompatible("Does not truncate correctly")
   public UnsignedInteger times(UnsignedInteger val) {
     // TODO(user): make this GWT-compatible
@@ -156,7 +154,6 @@ public final class UnsignedInteger extends Number implements Comparable<Unsigned
    * @throws ArithmeticException if {@code val} is zero
    * @since 14.0
    */
-  @CheckReturnValue
   public UnsignedInteger dividedBy(UnsignedInteger val) {
     return fromIntBits(UnsignedInts.divide(value, checkNotNull(val).value));
   }
@@ -167,7 +164,6 @@ public final class UnsignedInteger extends Number implements Comparable<Unsigned
    * @throws ArithmeticException if {@code val} is zero
    * @since 14.0
    */
-  @CheckReturnValue
   public UnsignedInteger mod(UnsignedInteger val) {
     return fromIntBits(UnsignedInts.remainder(value, checkNotNull(val).value));
   }

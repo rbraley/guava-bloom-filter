@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
 import java.nio.charset.Charset;
 

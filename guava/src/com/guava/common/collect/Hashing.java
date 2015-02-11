@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.guava.common.collect;
+package com.google.common.collect;
 
-import com.guava.common.annotations.GwtCompatible;
-import com.guava.common.primitives.Ints;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.primitives.Ints;
 
 import javax.annotation.Nullable;
 

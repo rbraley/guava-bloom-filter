@@ -12,13 +12,13 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkArgument;
 
-import com.guava.common.annotations.Beta;
-import com.guava.common.annotations.VisibleForTesting;
-import com.guava.common.base.Supplier;
+import com.google.common.annotations.Beta;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Supplier;
 
 import java.security.MessageDigest;
 import java.util.Iterator;
@@ -226,6 +226,20 @@ public final class Hashing {
   }
 
   /**
+   * Returns a hash function implementing the CRC32C checksum algorithm (32 hash bits) as described
+   * by RFC 3720, Section 12.1.
+   *
+   * @since 18.0
+   */
+  public static HashFunction crc32c() {
+    return Crc32cHolder.CRC_32_C;
+  }
+
+  private static final class Crc32cHolder {
+    static final HashFunction CRC_32_C = new Crc32cHashFunction();
+  }
+
+  /**
    * Returns a hash function implementing the CRC-32 checksum algorithm (32 hash bits) by delegating
    * to the {@link CRC32} {@link Checksum}.
    *
@@ -290,34 +304,70 @@ public final class Hashing {
   }
 
   /**
-   * Assigns to {@code hashCode} a "bucket" in the range {@code [0, buckets)}, in a uniform
-   * manner that minimizes the need for remapping as {@code buckets} grows. That is,
-   * {@code consistentHash(h, n)} equals:
+   * Assigns to {@code hashCode} a "bucket" in the range {@code [0, buckets)}, in a uniform manner
+   * that minimizes the need for remapping as {@code buckets} grows. That is, {@code
+   * consistentHash(h, n)} equals:
    *
    * <ul>
    * <li>{@code n - 1}, with approximate probability {@code 1/n}
    * <li>{@code consistentHash(h, n - 1)}, otherwise (probability {@code 1 - 1/n})
    * </ul>
    *
-   * <p>See the <a href="http://en.wikipedia.org/wiki/Consistent_hashing">wikipedia
-   * article on consistent hashing</a> for more information.
+   * <p>This method is suitable for the common use case of dividing work among buckets that meet the
+   * following conditions:
+   *
+   * <ul>
+   * <li>You want to assign the same fraction of inputs to each bucket.
+   * <li>When you reduce the number of buckets, you can accept that the most recently added buckets
+   * will be removed first. More concretely, if you are dividing traffic among tasks, you can
+   * decrease the number of tasks from 15 and 10, killing off the final 5 tasks, and {@code
+   * consistentHash} will handle it. If, however, you are dividing traffic among servers {@code
+   * alpha}, {@code bravo}, and {@code charlie} and you occasionally need to take each of the
+   * servers offline, {@code consistentHash} will be a poor fit: It provides no way for you to
+   * specify which of the three buckets is disappearing. Thus, if your buckets change from {@code
+   * [alpha, bravo, charlie]} to {@code [bravo, charlie]}, it will assign all the old {@code alpha}
+   * traffic to {@code bravo} and all the old {@code bravo} traffic to {@code charlie}, rather than
+   * letting {@code bravo} keep its traffic.
+   * </ul>
+   *
+   *
+   * <p>See the <a href="http://en.wikipedia.org/wiki/Consistent_hashing">Wikipedia article on
+   * consistent hashing</a> for more information.
    */
   public static int consistentHash(HashCode hashCode, int buckets) {
     return consistentHash(hashCode.padToLong(), buckets);
   }
 
   /**
-   * Assigns to {@code input} a "bucket" in the range {@code [0, buckets)}, in a uniform
-   * manner that minimizes the need for remapping as {@code buckets} grows. That is,
-   * {@code consistentHash(h, n)} equals:
+   * Assigns to {@code input} a "bucket" in the range {@code [0, buckets)}, in a uniform manner that
+   * minimizes the need for remapping as {@code buckets} grows. That is, {@code consistentHash(h,
+   * n)} equals:
    *
    * <ul>
    * <li>{@code n - 1}, with approximate probability {@code 1/n}
    * <li>{@code consistentHash(h, n - 1)}, otherwise (probability {@code 1 - 1/n})
    * </ul>
    *
-   * <p>See the <a href="http://en.wikipedia.org/wiki/Consistent_hashing">wikipedia
-   * article on consistent hashing</a> for more information.
+   * <p>This method is suitable for the common use case of dividing work among buckets that meet the
+   * following conditions:
+   *
+   * <ul>
+   * <li>You want to assign the same fraction of inputs to each bucket.
+   * <li>When you reduce the number of buckets, you can accept that the most recently added buckets
+   * will be removed first. More concretely, if you are dividing traffic among tasks, you can
+   * decrease the number of tasks from 15 and 10, killing off the final 5 tasks, and {@code
+   * consistentHash} will handle it. If, however, you are dividing traffic among servers {@code
+   * alpha}, {@code bravo}, and {@code charlie} and you occasionally need to take each of the
+   * servers offline, {@code consistentHash} will be a poor fit: It provides no way for you to
+   * specify which of the three buckets is disappearing. Thus, if your buckets change from {@code
+   * [alpha, bravo, charlie]} to {@code [bravo, charlie]}, it will assign all the old {@code alpha}
+   * traffic to {@code bravo} and all the old {@code bravo} traffic to {@code charlie}, rather than
+   * letting {@code bravo} keep its traffic.
+   * </ul>
+   *
+   *
+   * <p>See the <a href="http://en.wikipedia.org/wiki/Consistent_hashing">Wikipedia article on
+   * consistent hashing</a> for more information.
    */
   public static int consistentHash(long input, int buckets) {
     checkArgument(buckets > 0, "buckets must be positive: %s", buckets);

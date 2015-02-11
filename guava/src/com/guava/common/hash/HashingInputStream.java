@@ -12,11 +12,11 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.guava.common.annotations.Beta;
+import com.google.common.annotations.Beta;
 
 import java.io.FilterInputStream;
 import java.io.IOException;

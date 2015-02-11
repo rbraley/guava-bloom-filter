@@ -12,11 +12,11 @@
  * the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.io.Serializable;
 import java.security.MessageDigest;
@@ -144,11 +144,12 @@ final class MessageDigestHashFunction extends AbstractStreamingHashFunction
     }
 
     private void checkNotDone() {
-      checkState(!done, "Cannot use Hasher after calling #hash() on it");
+      checkState(!done, "Cannot re-use a Hasher after calling hash() on it");
     }
 
     @Override
     public HashCode hash() {
+      checkNotDone();
       done = true;
       return (bytes == digest.getDigestLength())
           ? HashCode.fromBytesNoCopy(digest.digest())

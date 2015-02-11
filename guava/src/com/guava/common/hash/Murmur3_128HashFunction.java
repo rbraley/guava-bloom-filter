@@ -23,9 +23,9 @@
  * (Modified to adapt to Guava coding conventions and to use the HashFunction interface)
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.primitives.UnsignedBytes.toInt;
+import static com.google.common.primitives.UnsignedBytes.toInt;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;

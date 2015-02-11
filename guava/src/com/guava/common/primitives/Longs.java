@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkElementIndex;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkPositionIndexes;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkElementIndex;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkPositionIndexes;
 
-import com.guava.common.annotations.Beta;
-import com.guava.common.annotations.GwtCompatible;
-import com.guava.common.base.Converter;
+import com.google.common.annotations.Beta;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.base.Converter;
 
 import java.io.Serializable;
 import java.util.AbstractList;
@@ -33,6 +33,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nullable;
 
 /**
  * Static utility methods pertaining to {@code long} primitives, that are not
@@ -45,6 +49,7 @@ import java.util.RandomAccess;
  * @author Kevin Bourrillion
  * @since 1.0
  */
+@CheckReturnValue
 @GwtCompatible
 public final class Longs {
   private Longs() {}
@@ -82,15 +87,14 @@ public final class Longs {
    * Compares the two specified {@code long} values. The sign of the value
    * returned is the same as that of {@code ((Long) a).compareTo(b)}.
    *
-   * <p><b>Note:</b> projects using JDK 7 or later should use the equivalent
-   * {@link Long#compare} method instead.
+   * <p><b>Note for Java 7 and later:</b> this method should be treated as
+   * deprecated; use the equivalent {@link Long#compare} method instead.
    *
    * @param a the first {@code long} to compare
    * @param b the second {@code long} to compare
    * @return a negative value if {@code a} is less than {@code b}; a positive
    *     value if {@code a} is greater than {@code b}; or zero if they are equal
    */
-  // TODO(kevinb): if JDK 6 ever becomes a non-concern, remove this
   public static int compare(long a, long b) {
     return (a < b) ? -1 : ((a > b) ? 1 : 0);
   }
@@ -260,7 +264,7 @@ public final class Longs {
    *
    * <p>If you need to convert and concatenate several values (possibly even of
    * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
-   * {@link com.guava.common.io.ByteStreams#newDataOutput()} to get a growable
+   * {@link com.google.common.io.ByteStreams#newDataOutput()} to get a growable
    * buffer.
    */
   public static byte[] toByteArray(long value) {
@@ -291,7 +295,7 @@ public final class Longs {
     checkArgument(bytes.length >= BYTES,
         "array too small: %s < %s", bytes.length, BYTES);
     return fromBytes(bytes[0], bytes[1], bytes[2], bytes[3],
-        bytes[4], bytes[5], bytes[6], bytes[7]) ;
+        bytes[4], bytes[5], bytes[6], bytes[7]);
   }
 
   /**
@@ -320,6 +324,8 @@ public final class Longs {
    *
    * <p>Unlike {@link Long#parseLong(String)}, this method returns
    * {@code null} instead of throwing an exception if parsing fails.
+   * Additionally, this method only accepts ASCII digits, and returns
+   * {@code null} if non-ASCII digits are present in the string.
    *
    * <p>Note that strings prefixed with ASCII {@code '+'} are rejected, even
    * under JDK 7, despite the change to {@link Long#parseLong(String)} for
@@ -332,6 +338,8 @@ public final class Longs {
    * @since 14.0
    */
   @Beta
+  @Nullable
+  @CheckForNull
   public static Long tryParse(String string) {
     if (checkNotNull(string).isEmpty()) {
       return null;
@@ -357,7 +365,7 @@ public final class Longs {
       }
       accum -= digit;
     }
-    
+
     if (negative) {
       return accum;
     } else if (accum == Long.MIN_VALUE) {
@@ -620,7 +628,7 @@ public final class Longs {
       return new LongArrayAsList(array, start + fromIndex, start + toIndex);
     }
 
-    @Override public boolean equals(Object object) {
+    @Override public boolean equals(@Nullable Object object) {
       if (object == this) {
         return true;
       }

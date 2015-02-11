@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkElementIndex;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkPositionIndexes;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkElementIndex;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkPositionIndexes;
 
-import com.guava.common.annotations.Beta;
-import com.guava.common.annotations.GwtCompatible;
-import com.guava.common.annotations.GwtIncompatible;
-import com.guava.common.base.Converter;
+import com.google.common.annotations.Beta;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtIncompatible;
+import com.google.common.base.Converter;
 
 import java.io.Serializable;
 import java.util.AbstractList;
@@ -34,6 +34,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
+
+import javax.annotation.CheckReturnValue;
 
 /**
  * Static utility methods pertaining to {@code short} primitives, that are not
@@ -46,6 +48,7 @@ import java.util.RandomAccess;
  * @author Kevin Bourrillion
  * @since 1.0
  */
+@CheckReturnValue
 @GwtCompatible(emulated = true)
 public final class Shorts {
   private Shorts() {}
@@ -114,15 +117,14 @@ public final class Shorts {
    * Compares the two specified {@code short} values. The sign of the value
    * returned is the same as that of {@code ((Short) a).compareTo(b)}.
    *
-   * <p><b>Note:</b> projects using JDK 7 or later should use the equivalent
-   * {@link Short#compare} method instead.
+   * <p><b>Note for Java 7 and later:</b> this method should be treated as
+   * deprecated; use the equivalent {@link Short#compare} method instead.
    *
    * @param a the first {@code short} to compare
    * @param b the second {@code short} to compare
    * @return a negative value if {@code a} is less than {@code b}; a positive
    *     value if {@code a} is greater than {@code b}; or zero if they are equal
    */
-  // TODO(kevinb): if JDK 6 ever becomes a non-concern, remove this
   public static int compare(short a, short b) {
     return a - b; // safe due to restricted range
   }
@@ -293,7 +295,7 @@ public final class Shorts {
    *
    * <p>If you need to convert and concatenate several values (possibly even of
    * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
-   * {@link com.guava.common.io.ByteStreams#newDataOutput()} to get a growable
+   * {@link com.google.common.io.ByteStreams#newDataOutput()} to get a growable
    * buffer.
    */
   @GwtIncompatible("doesn't work")

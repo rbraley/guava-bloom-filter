@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.guava.common.annotations;
+package com.google.common.annotations;
 
 /**
  * Annotates a program element that exists, or is more widely visible than

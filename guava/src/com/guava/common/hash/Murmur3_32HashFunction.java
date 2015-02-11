@@ -23,13 +23,13 @@
  * (Modified to adapt to Guava coding conventions and to use the HashFunction interface)
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.primitives.UnsignedBytes.toInt;
+import static com.google.common.primitives.UnsignedBytes.toInt;
 
-import com.guava.common.primitives.Chars;
-import com.guava.common.primitives.Ints;
-import com.guava.common.primitives.Longs;
+import com.google.common.primitives.Chars;
+import com.google.common.primitives.Ints;
+import com.google.common.primitives.Longs;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -101,7 +101,7 @@ final class Murmur3_32HashFunction extends AbstractStreamingHashFunction impleme
     return fmix(h1, Longs.BYTES);
   }
 
-  // TODO(user): Maybe implement #hashBytes instead?
+  // TODO(kak): Maybe implement #hashBytes instead?
   @Override public HashCode hashUnencodedChars(CharSequence input) {
     int h1 = seed;
 

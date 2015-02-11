@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.guava.common.annotations;
+package com.google.common.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

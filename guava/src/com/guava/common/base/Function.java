@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.guava.common.base;
+package com.google.common.base;
 
-import com.guava.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 

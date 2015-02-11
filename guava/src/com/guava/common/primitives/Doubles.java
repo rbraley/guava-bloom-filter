@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package com.guava.common.primitives;
+package com.google.common.primitives;
 
-import static com.guava.common.base.Preconditions.checkArgument;
-import static com.guava.common.base.Preconditions.checkElementIndex;
-import static com.guava.common.base.Preconditions.checkNotNull;
-import static com.guava.common.base.Preconditions.checkPositionIndexes;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkElementIndex;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkPositionIndexes;
 import static java.lang.Double.NEGATIVE_INFINITY;
 import static java.lang.Double.POSITIVE_INFINITY;
 
-import com.guava.common.annotations.Beta;
-import com.guava.common.annotations.GwtCompatible;
-import com.guava.common.annotations.GwtIncompatible;
-import com.guava.common.base.Converter;
+import com.google.common.annotations.Beta;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtIncompatible;
+import com.google.common.base.Converter;
 
 import java.io.Serializable;
 import java.util.AbstractList;
@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.RandomAccess;
 import java.util.regex.Pattern;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 
 /**
@@ -51,6 +53,7 @@ import javax.annotation.Nullable;
  * @author Kevin Bourrillion
  * @since 1.0
  */
+@CheckReturnValue
 @GwtCompatible(emulated = true)
 public final class Doubles {
   private Doubles() {}
@@ -92,7 +95,6 @@ public final class Doubles {
    * @return a negative value if {@code a} is less than {@code b}; a positive
    *     value if {@code a} is greater than {@code b}; or zero if they are equal
    */
-  // TODO(kevinb): if Ints.compare etc. are ever removed, remove this one too
   public static int compare(double a, double b) {
     return Double.compare(a, b);
   }
@@ -393,7 +395,7 @@ public final class Doubles {
     public int compare(double[] left, double[] right) {
       int minLength = Math.min(left.length, right.length);
       for (int i = 0; i < minLength; i++) {
-        int result = Doubles.compare(left[i], right[i]);
+        int result = Double.compare(left[i], right[i]);
         if (result != 0) {
           return result;
         }
@@ -531,7 +533,7 @@ public final class Doubles {
       return new DoubleArrayAsList(array, start + fromIndex, start + toIndex);
     }
 
-    @Override public boolean equals(Object object) {
+    @Override public boolean equals(@Nullable Object object) {
       if (object == this) {
         return true;
       }
@@ -617,9 +619,10 @@ public final class Doubles {
    *     parsed as a {@code double} value
    * @since 14.0
    */
-  @GwtIncompatible("regular expressions")
-  @Nullable
   @Beta
+  @Nullable
+  @CheckForNull
+  @GwtIncompatible("regular expressions")
   public static Double tryParse(String string) {
     if (FLOATING_POINT_PATTERN.matcher(string).matches()) {
       // TODO(user): could be potentially optimized, but only with

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.guava.common.hash;
+package com.google.common.hash;
 
-import static com.guava.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.nio.charset.Charset;
 
